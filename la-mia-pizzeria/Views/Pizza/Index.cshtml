@@ -67,9 +67,14 @@
                                 <a class="btn btn-outline-primary mb-1" href="@Url.Action("Edit", "Pizza", new {id = Model.IndexOf(pizza)})">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a class="btn btn-outline-danger mb-1" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
+
+                                <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.IndexOf(pizza)" method="post" class="mb-3">
+                                    @Html.AntiForgeryToken()
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <button type="submit" class="btn btn-outline-danger mb-1">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </th>
                         </tr>
                     }

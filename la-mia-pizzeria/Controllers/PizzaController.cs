@@ -94,7 +94,16 @@ public class PizzaController : Controller
     // GET: PizzaController/Delete/5
     public ActionResult Delete(int id)
     {
-        return View();
+        Pizza pizzaToDelete = Pizzas.list[id];
+
+        if (pizzaToDelete == null)
+            return NotFound();
+
+
+        Pizzas.list.RemoveAt(id);
+        //Pizzas.list.Add(new Pizza("asdasd", "asdasda asd asd a sd asd ", 1.0));
+
+        return RedirectToAction(nameof(Index));
     }
 
     // POST: PizzaController/Delete/5
