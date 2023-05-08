@@ -61,8 +61,14 @@
                                 @pizza.price€
                             </td>
                             <th class="align-middle">
-                                <a class="btn btn-primary" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
-                                    Edit
+                                <a class="btn btn-outline-secondary mb-1" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a class="btn btn-outline-primary mb-1" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a class="btn btn-outline-danger mb-1" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                    <i class="fa-solid fa-trash"></i>
                                 </a>
                             </th>
                         </tr>
