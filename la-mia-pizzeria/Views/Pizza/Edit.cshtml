@@ -1,7 +1,7 @@
 ﻿@model la_mia_pizzeria_static.Pizza
 
 @{
-    ViewData["Title"] = "Inserisci";
+    ViewData["Title"] = "Modifica";
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
@@ -11,7 +11,7 @@
     <h4>Pizza</h4>
     <hr />
 
-    <form asp-action="Create" method="post" class="mb-3">
+    <form asp-action="Edit" method="post" class="mb-3">
         @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group mb-2">
@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             <a class="btn btn-outline-secondary" href="@Url.Action("Index", "Pizza")">Indietro</a>
-            <input type="submit" value="Inserisci" class="btn btn-primary" />
+            <input type="submit" value="Modifica" class="btn btn-primary" />
         </div>
     </form>
 

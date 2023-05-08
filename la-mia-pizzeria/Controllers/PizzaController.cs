@@ -56,21 +56,38 @@ public class PizzaController : Controller
     // GET: PizzaController/Edit/5
     public ActionResult Edit(int id)
     {
-        return View();
+        Pizza searchedPizza = Pizzas.list[id];
+
+        if (searchedPizza == null)
+            return NotFound();
+
+        return View(searchedPizza);
     }
 
     // POST: PizzaController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
+    public ActionResult Edit(int id, Pizza data)
     {
+
+        if (!ModelState.IsValid)
+        {
+            return View("Edit", data);
+        }
+
         try
         {
+            // attempt to create a new pizza
+            Pizza pizzaToEdit = Pizzas.list[id];
+            pizzaToEdit.name = data.name;
+            pizzaToEdit.description = data.description;
+            pizzaToEdit.price = data.price;
+
             return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View();
+            return NotFound();
         }
     }
 
