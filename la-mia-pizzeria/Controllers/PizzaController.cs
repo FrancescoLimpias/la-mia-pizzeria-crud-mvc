@@ -92,6 +92,8 @@ public class PizzaController : Controller
     }
 
     // GET: PizzaController/Delete/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public ActionResult Delete(int id)
     {
         Pizza pizzaToDelete = Pizzas.list[id];
@@ -104,20 +106,5 @@ public class PizzaController : Controller
         //Pizzas.list.Add(new Pizza("asdasd", "asdasda asd asd a sd asd ", 1.0));
 
         return RedirectToAction(nameof(Index));
-    }
-
-    // POST: PizzaController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
-    {
-        try
-        {
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View();
-        }
     }
 }
