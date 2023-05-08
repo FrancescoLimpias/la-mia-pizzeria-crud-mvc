@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "MainLayout";
+    ViewData["Title"] = "Details";
+}
+
+@model Pizza
+
+<div class="text-center">
+
+    <header>
+        <h1 class="display-4">Static Pizzeria</h1>
+        <p>By Francesco Limpias</p>
+    </header>
+
+    <main>
+        <div class="px-3">
+
+            <!-- Pizza title -->
+            <h2>Pizza @Model.name</h2>
+            <br />
+
+            <!-- Pizza image -->
+            @if (Model.ImagePath != null)
+            {
+                <img src="@Model.ImagePath" class="w-50" />
+            }
+            else
+            {
+                <span>
+                    Nessuna foto disponibile
+                </span>
+            }
+            <br />
+
+            <!-- Pizza price -->
+            <p>
+                <br />
+
+                @Model.description
+
+                <br />
+
+                Prezzo: <b>@Model.price€</b>
+            </p>
+
+            <!-- Go back -->
+            <a class="btn btn-primary mb-3" href="@Url.Action("Index", "Pizza")">Indietro</a>
+
+        </div>
+    </main>
+
+</div>
+
+

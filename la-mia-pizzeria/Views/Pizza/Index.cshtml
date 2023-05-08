@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "MainLayout";
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<Pizza>
+
+<div class="text-center">
+
+    <header>
+        <h1 class="display-4">Static Pizzeria</h1>
+        <p>By Francesco Limpias</p>
+    </header>
+
+    <main>
+        <div class="px-3">
+            <a class="btn btn-primary" href="@Url.Action("Create", "Pizza")">
+                Inserisci una pizza
+            </a>
+
+
+            @if (Model.Count == 0)
+            {
+                <h3>404 Pizzas not found :(</h3>
+            }
+            else
+            {
+                <table class="table">
+                    <caption>Le nostre pizze!</caption>
+                    <thead>
+                        <tr>
+                            <th class="text-danger">nome</th>
+                            <th>descrizione</th>
+                            <th>foto</th>
+                            <th>prezzo</th>
+                            <th>azioni</th>
+                        </tr>
+                    </thead>
+                    @foreach (Pizza pizza in @Model)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                @pizza.name
+                            </td>
+                            <td class="align-middle">
+                                @pizza.description
+                            </td>
+                            <td class="align-middle" class="w-25">
+                                @if (pizza.ImagePath != null)
+                                {
+                                    <img src="@pizza.ImagePath" class="w-50" />
+                                }
+                                else
+                                {
+                                    <span>
+                                        Nessuna foto disponibile
+                                    </span>
+                                }
+                            </td>
+                            <td class="align-middle">
+                                @pizza.price€
+                            </td>
+                            <th class="align-middle">
+                                <a class="btn btn-primary" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                    Edit
+                                </a>
+                            </th>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </main>
+
+</div>
+
+

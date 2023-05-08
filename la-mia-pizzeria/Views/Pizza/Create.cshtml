@@ -1,0 +1,39 @@
+﻿@model la_mia_pizzeria_static.Pizza
+
+@{
+    ViewData["Title"] = "Inserisci";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="text-center px-3">
+    <h1>Inserisci</h1>
+
+    <h4>Pizza</h4>
+    <hr />
+
+    <form asp-action="Create" method="post" class="mb-3">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mb-2">
+            <label asp-for="name" class="control-label"></label>
+            <input asp-for="name" class="form-control" />
+            <span asp-validation-for="name" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="description" class="control-label"></label>
+            <input asp-for="description" class="form-control" />
+            <span asp-validation-for="description" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-2">
+            <label asp-for="price" class="control-label"></label>
+            <input type="number" asp-for="price" class="form-control" />
+            <span asp-validation-for="price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-primary" href="@Url.Action("Index", "Pizza")">Indietro</a>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>
+

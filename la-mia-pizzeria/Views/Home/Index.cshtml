@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "MainLayout";
+    ViewData["Title"] = "Home Page";
+
+    List<Pizza> pizzas = new();
+    pizzas.Add(new Pizza("Margherita", "La classica margherita", 8.50, true));
+    pizzas.Add(new Pizza("Capricciosa", "Il nostro cavallo di battaglia", 8.50));
+    pizzas.Add(new Pizza("Diavola", "La mia preferita :p", 8.50, true));
+
+}
+
+<div class="text-center">
+
+    <header>
+        <h1 class="display-4">Static Pizzeria</h1>
+        <p>By Francesco Limpias</p>
+    </header>
+
+    <main>
+        <table class="table">
+            <caption>Le nostre pizze!</caption>
+            <thead>
+                <tr>
+                    <th class="text-danger">nome</th>
+                    <th>descrizione</th>
+                    <th>foto</th>
+                    <th>prezzo</th>
+                </tr>
+            </thead>
+            @foreach (Pizza pizza in pizzas)
+            {
+                <tr>
+                    <td class="align-middle">
+                        @pizza.name
+                    </td>
+                    <td class="align-middle">
+                        @pizza.description
+                    </td>
+                    <td class="align-middle" class="w-25">
+                        @if (pizza.ImagePath != null)
+                        {
+                            <img src="@pizza.ImagePath" class="w-25 h-25"/>
+                        }
+                        else
+                        {
+                            <span>
+                                Nessuna foto disponibile
+                            </span>
+                        }
+                    </td>
+                    <td class="align-middle">
+                        @pizza.price€
+                    </td>
+                </tr>
+            }
+        </table>
+    </main>
+
+</div>
+
+
