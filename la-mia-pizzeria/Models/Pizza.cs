@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace la_mia_pizzeria_static
+namespace la_mia_pizzeria_static.Models
 {
     public class Pizza
     {
 
+        [Key]
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         public string name { get; set; }
 
@@ -27,6 +28,9 @@ namespace la_mia_pizzeria_static
 
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         public double price { get; set; }
+
+        public int CategoriaId { get; set; }
+        public Categoria Categoria { get; set; }
 
         public Pizza()
         {
