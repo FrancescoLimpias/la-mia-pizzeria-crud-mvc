@@ -1,6 +1,8 @@
-﻿namespace la_mia_pizzeria_static
+﻿using la_mia_pizzeria_static.Models;
+
+namespace la_mia_pizzeria_static
 {
-    public static class Pizzas
+    public static class PizzasSeeder
     {
 
         public static List<Pizza> list = new List<Pizza>()
