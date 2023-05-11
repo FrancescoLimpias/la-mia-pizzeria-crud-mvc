@@ -1,0 +1,30 @@
+﻿@model IEnumerable<la_mia_pizzeria_static.Models.DeveloperCommandModel>
+
+@{
+    ViewData["Title"] = "Developer Console";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Command</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> Command name </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
