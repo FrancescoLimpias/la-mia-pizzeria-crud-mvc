@@ -8,6 +8,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <table class="table">
+
     <thead>
         <tr>
             <th>Command</th>
@@ -15,36 +16,45 @@
             <th>Action</th>
         </tr>
     </thead>
+
     <tbody>
+
         @{
             int index = 0;
         }
-        @foreach (DeveloperCommandModel item in Model)
+        @foreach (DeveloperCommandModel command in Model)
         {
             <tr>
-                <td class="align-middle">@item.Name</td>
+
+                <!-- Command name -->
+                <td class="align-middle">@command.Name</td>
+
+                <!-- Command status (switch idle/success/fail) -->
                 <td class="align-middle">
-                    @if (item.Status == null)
+                    @if (command.Status == null)
                     {
                         <span>idle</span>
                     }
-                    else if ((bool)item.Status)
+                    else if ((bool)command.Status)
                     {
-                        <span>Failed</span>
-                        <i class="fa-solid fa-circle-exclamation" style="color: #e41111;"></i>
+                        <span>Success</span>
+                        <i class="fa-solid fa-check" style="color: #198754;"></i>
                     }
                     else
                     {
-                        <span>Success</span>
-                        <i class="fa-solid fa-check" style="color: #10da32;"></i>
+                        <span>Failed</span>
+                        <i class="fa-solid fa-circle-exclamation" style="color: #dc3545;"></i>
                     }
                 </td>
+
+                <!-- Command actions -->
                 <td>
                     <form asp-controller="Developer" asp-action="Execute" method="POST">
                         @Html.AntiForgeryToken()
                         <button name="index" class="btn btn-outline-warning" type="submit" value="@index">Run</button>
                     </form>
                 </td>
+
             </tr>
             index++;
         }
