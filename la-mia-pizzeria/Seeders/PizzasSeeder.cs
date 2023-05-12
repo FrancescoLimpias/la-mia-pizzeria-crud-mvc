@@ -1,6 +1,6 @@
 ﻿using la_mia_pizzeria_static.Models;
 
-namespace la_mia_pizzeria_static
+namespace la_mia_pizzeria_static.Seeders
 {
     public static class PizzasSeeder
     {
