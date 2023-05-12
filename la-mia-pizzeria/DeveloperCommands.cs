@@ -32,7 +32,7 @@ namespace la_mia_pizzeria_static
                     "Seed categories",
                     () =>
                     {
-                        CategorySeeder.Run();
+                        new CategorySeeder().Run();
                         return true;
                     }
                 ),
@@ -46,6 +46,16 @@ namespace la_mia_pizzeria_static
                     "Clear pizzas",
                     () =>
                     {
+                        return true;
+                    }
+                ),
+
+                //seed      
+                new(
+                    "Seed pizzas",
+                    () =>
+                    {
+                        new PizzasSeeder().Run();
                         return true;
                     }
                 ),

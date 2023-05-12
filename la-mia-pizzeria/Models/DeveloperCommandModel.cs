@@ -21,7 +21,14 @@ namespace la_mia_pizzeria_static.Models
 
         public bool? Execute()
         {
-            Status = Execution();
+            try
+            {
+                Status = Execution();
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+            }
             return Status;
         }
 

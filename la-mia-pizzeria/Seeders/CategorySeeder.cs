@@ -1,32 +1,32 @@
 ﻿using la_mia_pizzeria_static.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace la_mia_pizzeria_static.Seeders
 {
-    public static class CategorySeeder
+    public class CategorySeeder : Seeder<string, Category>
     {
-
-        static List<string> categoriesNames = new List<string>()
-        {
-            "Normale",
-            "Pala",
-            "Maxi",
-            "Metro",
-            "Vegana"
-        };
-
-        public static void Run()
-        {
-
-            using PizzeriaContext context = new PizzeriaContext();
+        public CategorySeeder() : base(new()
             {
-                foreach (var categoryName in categoriesNames)
-                {
-                    Category newCategory = new() { Name = categoryName };
-                    context.Categories.Add(newCategory);
-                }
-                context.SaveChanges();
-            }
+                "Normale",
+                "Pala",
+                "Maxi",
+                "Metro",
+                "Vegana"
+            })
+        { }
 
+        public override DbSet<Category> GetDbSet(PizzeriaContext context)
+        {
+            return context.Categories;
+        }
+
+        public override Category GenerateElementFromRawData(string name)
+        {
+            return new()
+            {
+                Name = name,
+            };
         }
     }
 }
