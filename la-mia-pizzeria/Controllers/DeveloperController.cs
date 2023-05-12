@@ -1,4 +1,5 @@
 ﻿using la_mia_pizzeria_static.Models;
+using la_mia_pizzeria_static.Models.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,26 +11,34 @@ namespace la_mia_pizzeria_static.Controllers
         // GET: DeveloperController
         public ActionResult Index()
         {
-            return View(DeveloperCommands.list);
+            return View(DeveloperCommands.groups);
         }
 
         // POST: DeveloperController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Execute([FromForm] int index)
+        public ActionResult Execute([FromForm] Guid guid)
         {
             try
             {
-                //Reset idle states
-                DeveloperCommands.list = DeveloperCommands.list.Select(command =>
+                DeveloperCommandModel? DVM = null;
+
+                foreach (DeveloperCommandsGroup group in DeveloperCommands.groups)
                 {
-                    command.Status = null;
-                    return command;
-                }).ToList();
+                    //Reset idle states
+                    group.SetCommandsStatusToIdle();
+
+                    //Find command
+                    DVM ??= group.GetDeveloperCommandModel(guid);
+
+                }
+
+                //Nullity check
+                if (DVM == null)
+                    throw new NullReferenceException("The requested command was not found");
 
                 //Execute command
-                DeveloperCommandModel DVM = DeveloperCommands.list[index];
-                DVM.Status = DVM.Command();
+                DVM.Execute();
 
                 return RedirectToAction(nameof(Index));
             }
