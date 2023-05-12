@@ -1,49 +1,57 @@
-﻿using la_mia_pizzeria_static;
+﻿using la_mia_pizzeria_static.Models;
+using la_mia_pizzeria_static.Seeders;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers;
 public class PizzaController : Controller
 {
 
+    PizzeriaContext context = new PizzeriaContext();
+
     // GET: PizzaController
     public ActionResult Index()
     {
-        return View(Pizzas.list);
+        return View(context.Pizzas.ToList());
     }
 
     // GET: PizzaController/Details/5
-    public ActionResult Details(int id)
+    public ActionResult Details(long id)
     {
-        return View(Pizzas.list[id]);
+        return View(context.Pizzas.Find(id));
     }
 
     // GET: PizzaController/Create
     public ActionResult Create()
     {
-        return View();
+        return View(new PizzaPayload()
+        {
+            Pizza = new(),
+            Categories = context.Categories.ToList(),
+        });
     }
 
     // POST: PizzaController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(Pizza data)
+    public ActionResult Create(PizzaPayload data)
     {
 
         if (!ModelState.IsValid)
         {
-            return View("Create", data);
+            return View("Create", new PizzaPayload()
+            {
+                Pizza = data.Pizza,
+                Categories = context.Categories.ToList(),
+            });
         }
 
         try
         {
             // attempt to create a new pizza
-            Pizza newPizza = new();
-            newPizza.name = data.name;
-            newPizza.description = data.description;
-            newPizza.price = data.price;
-
-            Pizzas.list.Add(newPizza);
+            context.Pizzas.Add(data.Pizza);
+            context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
@@ -54,9 +62,9 @@ public class PizzaController : Controller
     }
 
     // GET: PizzaController/Edit/5
-    public ActionResult Edit(int id)
+    public ActionResult Edit(long id)
     {
-        Pizza searchedPizza = Pizzas.list[id];
+        Pizza? searchedPizza = context.Pizzas.Find(id);
 
         if (searchedPizza == null)
             return NotFound();
@@ -67,7 +75,7 @@ public class PizzaController : Controller
     // POST: PizzaController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, Pizza data)
+    public ActionResult Edit(long id, Pizza data)
     {
 
         if (!ModelState.IsValid)
@@ -78,10 +86,18 @@ public class PizzaController : Controller
         try
         {
             // attempt to create a new pizza
-            Pizza pizzaToEdit = Pizzas.list[id];
-            pizzaToEdit.name = data.name;
-            pizzaToEdit.description = data.description;
-            pizzaToEdit.price = data.price;
+            Pizza? pizzaToEdit = context.Pizzas.Find(id);
+
+            // nullity check
+            if (pizzaToEdit == null)
+                return NotFound();
+
+            pizzaToEdit.Name = data.Name;
+            pizzaToEdit.Description = data.Description;
+            pizzaToEdit.Price = data.Price;
+
+            //save
+            context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
@@ -94,16 +110,16 @@ public class PizzaController : Controller
     // GET: PizzaController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id)
+    public ActionResult Delete(long id)
     {
-        Pizza pizzaToDelete = Pizzas.list[id];
+        Pizza? pizzaToDelete = context.Pizzas.Find(id);
 
+        // nullity check
         if (pizzaToDelete == null)
             return NotFound();
 
-
-        Pizzas.list.RemoveAt(id);
-        //Pizzas.list.Add(new Pizza("asdasd", "asdasda asd asd a sd asd ", 1.0));
+        context.Pizzas.Remove(pizzaToDelete);
+        context.SaveChanges();
 
         return RedirectToAction(nameof(Index));
     }

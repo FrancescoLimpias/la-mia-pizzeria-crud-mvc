@@ -16,8 +16,8 @@ namespace la_mia_pizzeria_static.Utilities
             string description = (string)value;
 
             // Description is not long enough
-            if (description.Split(" ").Count() < 5)
-                return new ValidationResult("La descrizione, se inserita, deve avere almeno 5 parole");
+            if (description.Split(" ").Count() < 3)
+                return new ValidationResult("La descrizione, se inserita, deve avere almeno 3 parole");
 
             return ValidationResult.Success;
         }

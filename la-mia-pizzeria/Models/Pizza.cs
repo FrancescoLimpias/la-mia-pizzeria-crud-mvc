@@ -1,48 +1,54 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using la_mia_pizzeria_static.Utilities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace la_mia_pizzeria_static.Models
 {
+
+    [Index(nameof(PizzaId), IsUnique = true)]
     public class Pizza
     {
 
         [Key]
+        public long PizzaId { get; set; } 
+
         [Required(ErrorMessage = "Il campo è obbligatorio")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [StringLength(100)]
         [LongDescriptionValidation]
-        public string? description { get; set; }
+        public string? Description { get; set; }
 
-        private bool _thereIsAnImage { get; set; }
+        private bool ThereIsAnImage { get; set; }
 
         public string? ImagePath
         {
             get
             {
-                if (_thereIsAnImage)
-                    return "../../img/pizza" + name.ToLower() + ".jpg";
+                if (ThereIsAnImage)
+                    return "../../img/pizza" + Name.ToLower() + ".jpg";
                 else
                     return null;
             }
         }
 
         [Required(ErrorMessage = "Il campo è obbligatorio")]
-        public double price { get; set; }
+        public double Price { get; set; }
 
-        public int CategoriaId { get; set; }
-        public Categoria Categoria { get; set; }
+        public long?  CategoryId { get; set; }
+        public Category? Category { get; set; }
 
         public Pizza()
         {
-            _thereIsAnImage = false;
+            ThereIsAnImage = false;
         }
 
         public Pizza(string name, string description, double price, bool thereIsAnImage = false)
         {
-            this.name = name;
-            this.description = description;
-            this.price = price;
-            _thereIsAnImage = thereIsAnImage;
+            this.Name = name;
+            this.Description = description;
+            this.Price = price;
+            ThereIsAnImage = thereIsAnImage;
         }
     }
 }

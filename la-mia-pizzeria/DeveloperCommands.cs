@@ -46,6 +46,8 @@ namespace la_mia_pizzeria_static
                     "Clear pizzas",
                     () =>
                     {
+                        context.Pizzas.ExecuteDelete();
+                        context.SaveChanges();
                         return true;
                     }
                 ),
@@ -55,7 +57,7 @@ namespace la_mia_pizzeria_static
                     "Seed pizzas",
                     () =>
                     {
-                        new PizzasSeeder().Run();
+                        new PizzaSeeder().Run();
                         return true;
                     }
                 ),

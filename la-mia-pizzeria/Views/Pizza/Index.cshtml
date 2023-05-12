@@ -40,10 +40,10 @@
                     {
                         <tr>
                             <td class="align-middle">
-                                @pizza.name
+                                @pizza.Name
                             </td>
                             <td class="align-middle">
-                                @pizza.description
+                                @pizza.Description
                             </td>
                             <td class="align-middle" class="w-25">
                                 @if (pizza.ImagePath != null)
@@ -58,17 +58,17 @@
                                 }
                             </td>
                             <td class="align-middle">
-                                @pizza.price€
+                                @pizza.Price€
                             </td>
                             <th class="align-middle">
-                                <a class="btn btn-outline-secondary mb-1" href="@Url.Action("Details", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                <a class="btn btn-outline-secondary mb-1" href="@Url.Action("Details", "Pizza", new {id = pizza.PizzaId})">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <a class="btn btn-outline-primary mb-1" href="@Url.Action("Edit", "Pizza", new {id = Model.IndexOf(pizza)})">
+                                <a class="btn btn-outline-primary mb-1" href="@Url.Action("Edit", "Pizza", new {id = pizza.PizzaId})">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.IndexOf(pizza)" method="post" class="mb-3">
+                                <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.PizzaId" method="post" class="mb-3">
                                     @Html.AntiForgeryToken()
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <button type="submit" class="btn btn-outline-danger mb-1">
