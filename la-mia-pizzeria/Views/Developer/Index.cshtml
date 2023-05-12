@@ -11,20 +11,42 @@
     <thead>
         <tr>
             <th>Command</th>
+            <th>Staus</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @{
+            int index = 0;
+        }
+        @foreach (DeveloperCommandModel item in Model)
         {
             <tr>
-                <td> Command name </td>
+                <td class="align-middle">@item.Name</td>
+                <td class="align-middle">
+                    @if (item.Status == null)
+                    {
+                        <span>idle</span>
+                    }
+                    else if ((bool)item.Status)
+                    {
+                        <span>Failed</span>
+                        <i class="fa-solid fa-circle-exclamation" style="color: #e41111;"></i>
+                    }
+                    else
+                    {
+                        <span>Success</span>
+                        <i class="fa-solid fa-check" style="color: #10da32;"></i>
+                    }
+                </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item">Delete</a>
+                    <form asp-controller="Developer" asp-action="Execute" method="POST">
+                        @Html.AntiForgeryToken()
+                        <button name="index" class="btn btn-outline-warning" type="submit" value="@index">Run</button>
+                    </form>
                 </td>
             </tr>
+            index++;
         }
     </tbody>
 </table>

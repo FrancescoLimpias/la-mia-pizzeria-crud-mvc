@@ -6,6 +6,12 @@ namespace la_mia_pizzeria_static.Models
     {
 
         [Key]
-        public long DeveloperCommandModelId { get; set; }
+        public int DeveloperCommandModelId { get; set; }
+
+        public string Name { get; set; }
+        public bool? Status { get; set; } = null;
+
+        public Func<bool> Command { get; set; }
+
     }
 }

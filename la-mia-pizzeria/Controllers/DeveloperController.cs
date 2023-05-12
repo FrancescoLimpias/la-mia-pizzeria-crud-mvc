@@ -6,76 +6,31 @@ namespace la_mia_pizzeria_static.Controllers
 {
     public class DeveloperController : Controller
     {
+
         // GET: DeveloperController
         public ActionResult Index()
         {
-            return View(new List<DeveloperCommandModel>()
-            {
-
-            });
-        }
-
-        // GET: DeveloperController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: DeveloperController/Create
-        public ActionResult Create()
-        {
-            return View();
+            return View(DeveloperCommands.list);
         }
 
         // POST: DeveloperController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Execute([FromForm] int index)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                //Reset idle states
+                DeveloperCommands.list = DeveloperCommands.list.Select(command =>
+                {
+                    command.Status = null;
+                    return command;
+                }).ToList();
 
-        // GET: DeveloperController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                //Execute command
+                DeveloperCommandModel DVM = DeveloperCommands.list[index];
+                DVM.Status = DVM.Command();
 
-        // POST: DeveloperController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DeveloperController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: DeveloperController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
                 return RedirectToAction(nameof(Index));
             }
             catch
