@@ -1,69 +1,82 @@
 ﻿using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Utility;
 using la_mia_pizzeria_static.Seeders;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace la_mia_pizzeria_static
 {
     public static class DeveloperCommands
     {
 
-        static PizzeriaContext context = new PizzeriaContext();
+        private static readonly PizzeriaContext context = new();
 
         // Developer Commands
-        public static List<DeveloperCommandsGroup> groups = new()
+        public static List<DeveloperCommandsGroup> Groups = new()
         {
-            /* CATEGORIES */
-            new("Categories", new()
+            // General section
+            new("General", new()
             {
                     
-                //clear
+                // example command with answer
                 new(
-                    "Clear categories",
+                    "[EXAMPLE] Are categories seeded?",
                     () =>
                     {
-                        context.Categories.ExecuteDelete();
-                        context.SaveChanges();
-                        return true;
+                        return context.Categories.Count() > 0;
                     }),
 
-                //seed      
-                new(
-                    "Seed categories",
-                    () =>
-                    {
-                        new CategorySeeder().Run();
-                        return true;
-                    }
-                ),
             }),
 
-            new("Pizzas", new()
-            {
-
-                //clear
-                new(
-                    "Clear pizzas",
-                    () =>
-                    {
-                        context.Pizzas.ExecuteDelete();
-                        context.SaveChanges();
-                        return true;
-                    }
-                ),
-
-                //seed      
-                new(
-                    "Seed pizzas",
-                    () =>
-                    {
-                        new PizzaSeeder().Run();
-                        return true;
-                    }
-                ),
-
-            }),
-
+            // Seeders sections
+            GetCommandGroupForModel<Category, CategorySeeder>(context.Categories),
+            GetCommandGroupForModel<Pizza, PizzaSeeder>(context.Pizzas),
         };
+
+        private static DeveloperCommandsGroup GetCommandGroupForModel<TModel, TSeeder>(DbSet<TModel> dbSet, string? groupName = null) where TModel : class where TSeeder : ISeeder, new()
+        {
+            // Determine group name            
+            groupName ??= "Model: " + typeof(TModel).Name;
+
+            // Instantiate seeder
+            TSeeder seeder = new();
+
+            return new(groupName, new()
+                {
+                    //population command
+                    new("is db table populated?", () =>
+                        {
+                            return dbSet.Count() > 0;
+                        }),
+
+                    //refresh command
+                    new("refresh db table", () =>
+                        {
+                            dbSet.ExecuteDelete();
+                            context.SaveChanges();
+
+                            seeder.Seed();
+                            return true;
+                        }),
+
+                    //clear command
+                    new ("clear db table", () =>
+                        {
+                            dbSet.ExecuteDelete();
+                            context.SaveChanges();
+                            return true;
+                        }),
+
+                    //seed command  
+                    new ("seed db table", () =>
+                        {
+                            seeder.Seed();
+                            return true;
+                        }),
+                }
+            );
+        }
+
     }
 }

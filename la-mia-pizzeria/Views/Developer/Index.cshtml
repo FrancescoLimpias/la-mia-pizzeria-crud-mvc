@@ -20,7 +20,7 @@
             <thead>
                 <tr>
                     <th>Command</th>
-                    <th>Status</th>
+                    <th>Response</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -38,17 +38,15 @@
                         <td class="align-middle">
                             @if (command.Status == null)
                             {
-                                <span>idle</span>
+                                <span>--</span>
                             }
                             else if ((bool)command.Status)
                             {
-                                <span>Success</span>
                                 <i class="fa-solid fa-check" style="color: #198754;"></i>
                             }
                             else
                             {
-                                <span>Failed</span>
-                                <i class="fa-solid fa-circle-exclamation" style="color: #dc3545;"></i>
+                                <i class="fa-solid fa-xmark" style="color: #dc3545;"></i>
                             }
                         </td>
 

@@ -3,26 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Seeders
 {
-    public abstract class Seeder<j, k> where k : class
+    public abstract class Seeder<TRawData, TModel> : ISeeder where TModel : class
     {
 
         //Database connection
         static PizzeriaContext context = new PizzeriaContext();
 
         //List of raw data for elements creation
-        static private List<j> RawList { get; set; }
+        static private List<TRawData> RawList { get; set; }
 
-        public Seeder(List<j> rawList)
+        public Seeder(List<TRawData> rawList)
         {
             RawList = rawList;
         }
 
         //Public method for running the database seeding
-        public void Run()
+        public void Seed()
         {
-            foreach (j rawData in RawList)
+            foreach (TRawData rawData in RawList)
             {
-                k newItem = GenerateElementFromRawData(rawData);
+                TModel newItem = GenerateElementFromRawData(rawData);
                 GetDbSet(context).Add(newItem);
             }
             context.SaveChanges();
@@ -30,18 +30,18 @@ namespace la_mia_pizzeria_static.Seeders
 
         //ABSTRACTS
         //Retrieve the DbSet to store elements into
-        abstract public DbSet<k> GetDbSet(PizzeriaContext context);
+        abstract public DbSet<TModel> GetDbSet(PizzeriaContext context);
         //Logic to translate raw data into new elements
-        abstract public k GenerateElementFromRawData(j rawData);
+        abstract public TModel GenerateElementFromRawData(TRawData rawData);
     }
 
     //Utility implementation for translationsless seeders
-    public abstract class Seeder<k> : Seeder<k, k> where k : class
+    public abstract class Seeder<TRawData> : Seeder<TRawData, TRawData> where TRawData : class
     {
-        protected Seeder(List<k> rawList) : base(rawList)
+        protected Seeder(List<TRawData> rawList) : base(rawList)
         { }
 
-        public override k GenerateElementFromRawData(k data)
+        public override TRawData GenerateElementFromRawData(TRawData data)
         {
             return data;
         }

@@ -11,7 +11,7 @@ namespace la_mia_pizzeria_static.Controllers
         // GET: DeveloperController
         public ActionResult Index()
         {
-            return View(DeveloperCommands.groups);
+            return View(DeveloperCommands.Groups);
         }
 
         // POST: DeveloperController/Create
@@ -23,7 +23,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 DeveloperCommandModel? DVM = null;
 
-                foreach (DeveloperCommandsGroup group in DeveloperCommands.groups)
+                foreach (DeveloperCommandsGroup group in DeveloperCommands.Groups)
                 {
                     //Reset idle states
                     group.SetCommandsStatusToIdle();
