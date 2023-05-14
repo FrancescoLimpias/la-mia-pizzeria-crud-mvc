@@ -13,13 +13,21 @@ public class PizzaController : Controller
     // GET: PizzaController
     public ActionResult Index()
     {
-        return View(context.Pizzas.ToList());
+        return View(
+            context.Pizzas
+            .Include(pizza => pizza.Category)
+            .ToList()
+            );
     }
 
     // GET: PizzaController/Details/5
     public ActionResult Details(long id)
     {
-        return View(context.Pizzas.Find(id));
+        return View(
+            context.Pizzas
+            .Where(pizza => pizza.PizzaId == id)
+            .Include(pizza => pizza.Category)
+            .FirstOrDefault());
     }
 
     // GET: PizzaController/Create
@@ -35,14 +43,14 @@ public class PizzaController : Controller
     // POST: PizzaController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(PizzaPayload data)
+    public ActionResult Create(Pizza data)
     {
 
         if (!ModelState.IsValid)
         {
             return View("Create", new PizzaPayload()
             {
-                Pizza = data.Pizza,
+                Pizza = data,
                 Categories = context.Categories.ToList(),
             });
         }
@@ -50,7 +58,7 @@ public class PizzaController : Controller
         try
         {
             // attempt to create a new pizza
-            context.Pizzas.Add(data.Pizza);
+            context.Pizzas.Add(data);
             context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
@@ -69,7 +77,11 @@ public class PizzaController : Controller
         if (searchedPizza == null)
             return NotFound();
 
-        return View(searchedPizza);
+        return View(new PizzaPayload()
+        {
+            Pizza = searchedPizza,
+            Categories = context.Categories.ToList(),
+        });
     }
 
     // POST: PizzaController/Edit/5
@@ -80,7 +92,11 @@ public class PizzaController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View("Edit", data);
+            return View("Edit", new PizzaPayload()
+            {
+                Pizza = data,
+                Categories = context.Categories.ToList(),
+            });
         }
 
         try
@@ -92,11 +108,13 @@ public class PizzaController : Controller
             if (pizzaToEdit == null)
                 return NotFound();
 
+            // update pizza's fields
             pizzaToEdit.Name = data.Name;
             pizzaToEdit.Description = data.Description;
             pizzaToEdit.Price = data.Price;
+            pizzaToEdit.CategoryId = data.CategoryId;
 
-            //save
+            // save
             context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
