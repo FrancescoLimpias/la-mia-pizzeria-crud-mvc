@@ -7,7 +7,7 @@ namespace la_mia_pizzeria_static.Seeders
     {
 
         //Database connection
-        static PizzeriaContext context = new PizzeriaContext();
+        static protected PizzeriaContext context = new PizzeriaContext();
 
         //List of raw data for elements creation
         static private List<TRawData> RawList { get; set; }
