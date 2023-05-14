@@ -43,8 +43,8 @@
                             <td class="align-middle">
                                 @pizza.Name
                             </td>
-                            <td class="align-middle">
-                                @pizza?.Category?.Name
+                            <td class="align-middle h5">
+                                @Html.Raw(pizza?.Category?.Symbol)
                             </td>
                             <td class="align-middle">
                                 @pizza.Description
