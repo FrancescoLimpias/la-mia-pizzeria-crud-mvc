@@ -9,7 +9,8 @@ namespace la_mia_pizzeria_static.Models
         public Guid DeveloperCommandModelGuid { get; set; } = Guid.NewGuid();
 
         public string Name { get; set; }
-        public bool? Status { get; set; } = null;
+        public bool? Response { get; set; } = null;
+        public Exception? Exception { get; set; } = null;
 
         public Func<bool> Execution { get; set; }
 
@@ -23,18 +24,20 @@ namespace la_mia_pizzeria_static.Models
         {
             try
             {
-                Status = Execution();
+                Response = Execution();
             }
             catch (Exception ex)
             {
-                Status = false;
+                Response = false;
+                Exception = ex;
             }
-            return Status;
+            return Response;
         }
 
-        public void SetIdle()
+        public void EmptyResponseAndException()
         {
-            Status = null;
+            Response = null;
+            Exception = null;
         }
 
     }

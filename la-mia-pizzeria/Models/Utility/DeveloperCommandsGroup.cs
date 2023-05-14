@@ -11,11 +11,11 @@
             Commands = DeveloperCommands;
         }
 
-        public void SetCommandsStatusToIdle()
+        public void EmptyCommandsResponsesAndExceptions()
         {
             foreach (var command in Commands)
             {
-                command.SetIdle();
+                command.EmptyResponseAndException();
             }
         }
 

@@ -3,10 +3,21 @@
 
 @{
     ViewData["Title"] = "Developer Endpoints";
-    Layout = "~/Views/Shared/MainLayout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
+
+<script type="text/javascript">
+    function openErrorWindow() {
+        window.open(
+            '/Developer/ExceptionPopup',
+            'ErrorDetail',
+            'height=' + 350 + "px"
+            + ',width=' + 700 + "px"
+            + ',left=500,top=10,status=no,toolbar=no,resizable=yes,scrollbars=yes'
+        );
+    }
+</script>
 
 <div class="container">
     @foreach (DeveloperCommandsGroup group in Model)
@@ -36,11 +47,17 @@
 
                         <!-- Command status (switch idle/success/fail) -->
                         <td class="align-middle">
-                            @if (command.Status == null)
+                            @if (command.Response == null)
                             {
                                 <span>--</span>
                             }
-                            else if ((bool)command.Status)
+                            else if (command.Exception != null)
+                            {
+                                <button class="btn btn-danger btn-sm rounded-pill" onclick="openErrorWindow()">
+                                    ERROR
+                                </button>
+                            }
+                            else if ((bool)command.Response)
                             {
                                 <i class="fa-solid fa-check" style="color: #198754;"></i>
                             }
