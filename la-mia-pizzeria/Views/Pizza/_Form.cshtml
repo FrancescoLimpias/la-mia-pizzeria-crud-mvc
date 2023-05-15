@@ -35,9 +35,11 @@
     </div>
 
     <!-- Category input -->
-    <div class="form-group mb-2">
-        <label asp-for="Item2.Pizza.CategoryId" class="control-label">Categoria</label>
-        <select asp-for="Item2.Pizza.CategoryId" name="CategoryId" class="form-control">
+    <div class="input-group mb-2">
+        <label asp-for="Item2.Pizza.CategoryId" class="input-group-text">
+            Categoria
+        </label>
+        <select asp-for="Item2.Pizza.CategoryId" name="CategoryId" class="form-select" aria-label="Category select">
             @foreach (Category category in Model.Item2.Categories)
             {
                 <option value="@category.CategoryId">
@@ -46,6 +48,22 @@
             }
         </select>
         <span asp-validation-for="Item2.Pizza.CategoryId" class="text-danger"></span>
+    </div>
+
+    <!-- Ingredients input -->
+    <div class="input-group mb-2">
+        <label asp-for="Item2.SelectedIngredients" class="input-group-text">
+            Ingredienti
+        </label>
+        <select asp-for="Item2.SelectedIngredients"
+                asp-items="@Model.Item2.Ingredients"
+                name="SelectedIngredients"
+                multiple="multiple"
+                size="10"
+                class="form-select"
+                aria-label="Ingredients select">
+        </select>
+        <span asp-validation-for="Item2.SelectedIngredients" class="text-danger"></span>
     </div>
 
     <!-- Navigation -->

@@ -31,6 +31,7 @@
                             <th class="text-danger">nome</th>
                             <th>categoria</th>
                             <th>descrizione</th>
+                            <th>allergeni</th>
                             <th>foto</th>
                             <th>prezzo</th>
                             <th>azioni</th>
@@ -48,6 +49,16 @@
                             <td class="align-middle">
                                 @pizza.Description
                             </td>
+                            <td class="align-middle">
+                                <div class="d-flex flex-wrap">
+                                    @foreach (Ingredient ingredient in pizza.Ingredients.Where(ingredient => ingredient.Allergen))
+                                    {
+                                        <span>
+                                            @ingredient.Symbol
+                                        </span>
+                                    }
+                                </div>
+                            </td>
                             <td class="align-middle" class="w-25">
                                 @if (pizza.ImagePath != null)
                                 {
@@ -64,20 +75,22 @@
                                 @pizza.Price€
                             </td>
                             <th class="align-middle">
-                                <a class="btn btn-outline-secondary mb-1" href="@Url.Action("Details", "Pizza", new {id = pizza.PizzaId})">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-                                <a class="btn btn-outline-primary mb-1" href="@Url.Action("Edit", "Pizza", new {id = pizza.PizzaId})">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
+                                <div class="d-flex flex-column">
+                                    <a class="btn btn-outline-secondary mb-1" href="@Url.Action("Details", "Pizza", new {id = pizza.PizzaId})">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-outline-primary mb-1" href="@Url.Action("Edit", "Pizza", new {id = pizza.PizzaId})">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
 
-                                <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.PizzaId" method="post" class="mb-3">
-                                    @Html.AntiForgeryToken()
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <button type="submit" class="btn btn-outline-danger mb-1">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
+                                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.PizzaId" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </th>
                         </tr>
                     }

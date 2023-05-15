@@ -41,7 +41,17 @@
 
                 Categoria: <b>@Model?.Category?.Name</b>
 
-                <br />
+                <div class="">
+                    <span>
+                        Ingredienti:
+                    </span>
+                    <ul class="list-group">
+                        @foreach(Ingredient ingredient in Model?.Ingredients)
+                        {
+                            <li class="list-group-item">@ingredient.Name @ingredient.Symbol</li>
+                        }
+                    </ul>
+                </div>
 
                 Prezzo: <b>@Model.Price€</b>
             </p>

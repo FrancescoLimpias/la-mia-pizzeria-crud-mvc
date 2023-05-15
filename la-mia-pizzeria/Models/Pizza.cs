@@ -10,7 +10,7 @@ namespace la_mia_pizzeria_static.Models
     {
 
         [Key]
-        public long PizzaId { get; set; } 
+        public long PizzaId { get; set; }
 
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         public string Name { get; set; }
@@ -35,8 +35,9 @@ namespace la_mia_pizzeria_static.Models
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         public double Price { get; set; }
 
-        public long?  CategoryId { get; set; }
+        public long? CategoryId { get; set; }
         public Category? Category { get; set; }
+        public List<Ingredient>? Ingredients { get; set; } = new();
 
         public Pizza()
         {

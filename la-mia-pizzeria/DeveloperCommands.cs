@@ -31,6 +31,7 @@ namespace la_mia_pizzeria_static
 
             // Seeders sections
             GetCommandGroupForModel<Category, CategorySeeder>(context.Categories),
+            GetCommandGroupForModel<Ingredient, IngredientSeeder>(context.Ingredients),
             GetCommandGroupForModel<Pizza, PizzaSeeder>(context.Pizzas),
         };
 

@@ -29,6 +29,25 @@ namespace la_mia_pizzeria_static.Seeders
                 data.CategoryId = categories[randomCategoryId].CategoryId;
             }
 
+            // Attach ingredients if available
+            var ingredients = context.Ingredients.ToList();
+            if (ingredients.Count() > 0)
+            {
+                int numberOfIngredients = random.Next(2, ingredients.Count() / 3);
+                for (int i = 0; i < numberOfIngredients; i++)
+                {
+                    Ingredient randomIngredient;
+
+                    do
+                    {
+                        int randomIngredientId = random.Next(ingredients.Count() - 1);
+                        randomIngredient = ingredients[randomIngredientId];
+                    } while (data.Ingredients.Any(ingredient => ingredient == randomIngredient));
+
+                    data.Ingredients.Add(randomIngredient);
+                }
+            }
+
             return data;
         }
 
