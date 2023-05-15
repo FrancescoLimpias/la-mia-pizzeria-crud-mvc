@@ -1,11 +1,13 @@
 ﻿using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace la_mia_pizzeria_static.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class DeveloperController : Controller
     {
 

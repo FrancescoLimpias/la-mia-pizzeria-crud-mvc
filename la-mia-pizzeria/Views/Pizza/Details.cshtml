@@ -46,7 +46,7 @@
                         Ingredienti:
                     </span>
                     <ul class="list-group">
-                        @foreach(Ingredient ingredient in Model?.Ingredients)
+                        @foreach (Ingredient ingredient in Model?.Ingredients)
                         {
                             <li class="list-group-item">@ingredient.Name @ingredient.Symbol</li>
                         }
@@ -57,8 +57,24 @@
             </p>
 
             <!-- Go back -->
-            <a class="btn btn-primary mb-3" href="@Url.Action("Index", "Pizza")">Indietro</a>
+            <div class="mb-3">
+                <a class="btn btn-primary" href="@Url.Action("Index", "Pizza")">Indietro</a>
 
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <a class="btn btn-outline-primary" href="@Url.Action("Edit", "Pizza", new {id = Model.PizzaId})">
+                        Modifica <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.PizzaId" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+                        <button type="submit" class="btn btn-outline-danger">
+                            Elimina <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                }
+            </div>
         </div>
     </main>
 

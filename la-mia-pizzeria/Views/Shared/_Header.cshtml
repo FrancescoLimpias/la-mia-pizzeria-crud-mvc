@@ -23,32 +23,30 @@
 
                 <!-- Links -->
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link active" aria-current="page" href="/">Pagina principale</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        Accesso
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <partial name="_LoginPartial" />
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/developer">Developer</a>
-                </li>
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/developer">Developer</a>
+                    </li>
+                }
 
             </ul>
 
+
             <!-- Search form -->
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Work in progress" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Lavori in corso" aria-label="Cerca">
+                <button class="btn btn-outline-success" type="submit">Cerca</button>
             </form>
 
         </div>

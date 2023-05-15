@@ -1,9 +1,11 @@
 ﻿using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Seeders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace la_mia_pizzeria_static.Controllers;
 public class PizzaController : Controller
@@ -34,6 +36,7 @@ public class PizzaController : Controller
     }
 
     // GET: PizzaController/Create
+    [Authorize(Roles = "ADMIN")]
     public ActionResult Create()
     {
         return View(new PizzaPayload()
@@ -45,6 +48,7 @@ public class PizzaController : Controller
     }
 
     // POST: PizzaController/Create
+    [Authorize(Roles = "ADMIN")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create(Pizza data, [FromForm] List<string> SelectedIngredients)
@@ -83,6 +87,7 @@ public class PizzaController : Controller
     }
 
     // GET: PizzaController/Edit/5
+    [Authorize(Roles = "ADMIN")]
     public ActionResult Edit(long id)
     {
         Pizza? searchedPizza =
@@ -103,6 +108,7 @@ public class PizzaController : Controller
     }
 
     // POST: PizzaController/Edit/5
+    [Authorize(Roles = "ADMIN")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(long id, Pizza data, [FromForm] List<string> SelectedIngredients)
@@ -159,6 +165,7 @@ public class PizzaController : Controller
     // GET: PizzaController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "ADMIN")]
     public ActionResult Delete(long id)
     {
         Pizza? pizzaToDelete = context.Pizzas.Find(id);
