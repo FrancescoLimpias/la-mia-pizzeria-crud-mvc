@@ -19,12 +19,15 @@ namespace la_mia_pizzeria_static
             new("General", new()
             {
                     
-                // example command with answer
+                // All database populated
                 new(
-                    "[EXAMPLE] Are categories seeded?",
+                    "Are all database tables populated?",
                     () =>
                     {
-                        return context.Categories.Count() > 0;
+                        return
+                            context.Categories.Count() > 0
+                            && context.Ingredients.Count() > 0
+                            && context.Pizzas.Count() > 0;
                     }),
 
             }),
